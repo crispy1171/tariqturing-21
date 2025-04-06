@@ -1,15 +1,12 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import TuringAnimation from "@/components/landing/TuringAnimation";
-
 const Index = () => {
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       {/* Navigation */}
       <nav className="w-full py-4 px-6 flex justify-between items-center border-b">
-        <h1 className="text-xl font-bold text-primary">TuringTales</h1>
+        <h1 className="text-xl font-bold text-primary">Tariq Turing</h1>
         <div className="flex gap-4">
           <Link to="/simulator" className="text-sm text-gray-600 hover:text-primary">Simulator</Link>
           <Link to="/tutorial" className="text-sm text-gray-600 hover:text-primary">Tutorial</Link>
@@ -79,10 +76,8 @@ const Index = () => {
       
       {/* Footer */}
       <footer className="py-6 px-6 border-t text-center text-sm text-gray-600">
-        <p>© 2025 TuringTales — An Educational Visualization Tool</p>
+        <p>Developed by Tariq AYYAD.</p>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
