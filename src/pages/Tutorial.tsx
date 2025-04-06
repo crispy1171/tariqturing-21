@@ -1,16 +1,13 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
-
 const Tutorial = () => {
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       {/* Navigation */}
       <nav className="w-full py-4 px-6 flex justify-between items-center border-b">
-        <Link to="/" className="text-xl font-bold text-primary">TuringTales</Link>
+        <Link to="/" className="text-xl font-bold text-primary">Tariq Turing</Link>
         <div className="flex gap-4">
           <Link to="/simulator" className="text-sm text-gray-600 hover:text-primary">Simulator</Link>
           <Link to="/tutorial" className="text-sm font-medium text-primary">Tutorial</Link>
@@ -106,8 +103,6 @@ q2, _, _, N        # Halt state`}
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Tutorial;
