@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 const TuringAnimation = () => {
   const [tapeState, setTapeState] = useState(['0', '1', '0', '1', '0', '1', '0']);
   const [headPosition, setHeadPosition] = useState(3);
-  const [currentState, setCurrentState] = useState('q0');
+  const [currentState, setCurrentState] = useState('right');
   const [direction, setDirection] = useState(1); // 1 for right, -1 for left
   
   useEffect(() => {
@@ -15,21 +15,21 @@ const TuringAnimation = () => {
       const newTape = [...tapeState];
       const currentSymbol = tapeState[headPosition];
       
-      if (currentState === 'q0' && currentSymbol === '0') {
+      if (currentState === 'right' && currentSymbol === '0') {
         newTape[headPosition] = '1';
-        setCurrentState('q1');
+        setCurrentState('carry');
         setDirection(1);
-      } else if (currentState === 'q0' && currentSymbol === '1') {
+      } else if (currentState === 'right' && currentSymbol === '1') {
         newTape[headPosition] = '0';
-        setCurrentState('q0');
+        setCurrentState('right');
         setDirection(-1);
-      } else if (currentState === 'q1' && currentSymbol === '0') {
+      } else if (currentState === 'carry' && currentSymbol === '0') {
         newTape[headPosition] = '1';
-        setCurrentState('q0');
+        setCurrentState('right');
         setDirection(1);
-      } else if (currentState === 'q1' && currentSymbol === '1') {
+      } else if (currentState === 'carry' && currentSymbol === '1') {
         newTape[headPosition] = '1';
-        setCurrentState('q1');
+        setCurrentState('carry');
         setDirection(-1);
       }
       
@@ -53,12 +53,17 @@ const TuringAnimation = () => {
     <div className="h-full flex flex-col items-center justify-center">
       {/* State visualization */}
       <div className="mb-8 flex items-center gap-8">
-        <div className={`state-node ${currentState === 'q0' ? 'active' : ''}`}>q0</div>
+        <div className={`state-node ${currentState === 'right' ? 'active' : ''}`}>right</div>
         <svg width="60" height="20" className="transition-arrow">
           <line x1="0" y1="10" x2="60" y2="10" strokeWidth="2" />
           <polygon points="60,10 50,5 50,15" fill="currentColor" />
         </svg>
-        <div className={`state-node ${currentState === 'q1' ? 'active' : ''}`}>q1</div>
+        <div className={`state-node ${currentState === 'carry' ? 'active' : ''}`}>carry</div>
+        <svg width="60" height="20" className="transition-arrow">
+          <line x1="0" y1="10" x2="60" y2="10" strokeWidth="2" />
+          <polygon points="60,10 50,5 50,15" fill="currentColor" />
+        </svg>
+        <div className={`state-node ${currentState === 'done' ? 'active' : ''}`}>done</div>
       </div>
       
       {/* Tape visualization */}
