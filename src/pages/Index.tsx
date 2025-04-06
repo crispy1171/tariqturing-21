@@ -47,6 +47,36 @@ const Index = () => {
         </div>
       </div>
       
+      {/* Features Section */}
+      <div className="bg-gray-50 py-12 px-6 md:px-12">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-2xl font-bold mb-8 text-center">Key Features</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+              <h3 className="text-lg font-medium mb-2">Visual State Transitions</h3>
+              <p className="text-gray-600">
+                See your Turing machine's states and transitions visualized as an interactive graph that updates in real-time.
+              </p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+              <h3 className="text-lg font-medium mb-2">Flexible Syntax Options</h3>
+              <p className="text-gray-600">
+                Define your machines using either classic notation or structured syntax with full support for complex operations.
+              </p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+              <h3 className="text-lg font-medium mb-2">Dynamic Tape Visualization</h3>
+              <p className="text-gray-600">
+                Watch as the read/write head moves along the tape, updating symbols based on your transition rules.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       {/* Footer */}
       <footer className="py-6 px-6 border-t text-center text-sm text-gray-600">
         <p>© 2025 TuringTales — An Educational Visualization Tool</p>
