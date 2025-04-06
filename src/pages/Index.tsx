@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -59,9 +58,9 @@ const Index = () => {
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-medium mb-2">Flexible Notation System</h3>
+              <h3 className="text-lg font-medium mb-2">Custom Machine Templates</h3>
               <p className="text-gray-600">
-                Define your machines using our intuitive YAML-like notation, with comprehensive support for complex transition rules and multi-symbol operations.
+                Choose from pre-built example machines or create your own from scratch with our library of common computational patterns and algorithms.
               </p>
             </div>
             
