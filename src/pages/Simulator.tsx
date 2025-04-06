@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Play, Pause, StepForward, RotateCcw, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import TuringMachine from '@/components/simulator/TuringMachine';
@@ -11,19 +10,8 @@ import StateGraph from '@/components/simulator/StateGraph';
 import { Slider } from '@/components/ui/slider';
 import { parseStateTable } from '@/utils/turingMachineParser';
 
-// Example presets
-const EXAMPLES = {
-  binaryIncrement: `# Binary increment
-# Initial tape: ...000...
-q0, 0 -> q0, 0, R
-q0, 1 -> q0, 1, R
-q0, _ -> q1, _, L
-q1, 0 -> q2, 1, N
-q1, 1 -> q1, 0, L
-q1, _ -> q2, 1, N
-q2, _, _, N # Halt`,
-
-  binaryAdd1: `# Adds 1 to a binary number.
+// Default binary increment example
+const DEFAULT_EXAMPLE = `# Adds 1 to a binary number
 input: '1011'
 blank: '_'
 start state: right
@@ -32,17 +20,19 @@ table:
   right:
     [1,0]: {write: R}
     _: {L: carry}
+  
   # then carry the 1
   carry:
     1: {write: 0, L: carry}
     0: {write: 1, L: done}
     _: {write: 1, L: done}
+  
+  # Done state (halts)
   done:
-`
-};
+`;
 
 const Simulator = () => {
-  const [stateTable, setStateTable] = useState(EXAMPLES.binaryIncrement);
+  const [stateTable, setStateTable] = useState(DEFAULT_EXAMPLE);
   const [tape, setTape] = useState<string[]>([]);
   const [headPosition, setHeadPosition] = useState(0);
   const [currentState, setCurrentState] = useState('');
@@ -62,7 +52,7 @@ const Simulator = () => {
     setIsDone(false);
     
     try {
-      // Use the new parser utility
+      // Use the parser utility
       const { transitions: parsedTransitions, initialTape, initialState } = parseStateTable(stateTable);
       
       if (parsedTransitions.length === 0) {
@@ -105,8 +95,7 @@ const Simulator = () => {
     const transition = transitions.find(
       t => t.currentState === currentState && 
         (t.readSymbol === currentSymbol || 
-         t.readSymbol.includes(currentSymbol) || // Handle [1,0] format
-         t.readSymbol === '_')
+         (Array.isArray(t.readSymbol) && t.readSymbol.includes(currentSymbol)))
     );
     
     if (!transition) {
@@ -121,7 +110,7 @@ const Simulator = () => {
     
     // Update tape
     const newTape = [...tape];
-    if (transition.writeSymbol && transition.writeSymbol !== '_') {
+    if (transition.writeSymbol && transition.writeSymbol !== 'R') {
       newTape[headPosition] = transition.writeSymbol;
       setTape(newTape);
       addToDebugLog(`  Write: ${transition.writeSymbol}`);
@@ -167,15 +156,7 @@ const Simulator = () => {
     return () => clearInterval(interval);
   }, [isRunning, headPosition, currentState, tape, transitions, speed, isDone]);
   
-  // Load an example
-  const loadExample = (example: keyof typeof EXAMPLES) => {
-    setStateTable(EXAMPLES[example]);
-    setIsRunning(false);
-    setIsDone(false);
-    setTimeout(initialize, 0); // Initialize after state update
-  };
-  
-  // Initialize on first load and when state table changes
+  // Initialize on first load
   useEffect(() => {
     initialize();
   }, []);
@@ -198,32 +179,13 @@ const Simulator = () => {
           {/* Left column - State Table */}
           <Card className="col-span-1 row-span-2">
             <CardHeader className="pb-2">
-              <CardTitle className="flex justify-between items-center">
-                <span>State Table</span>
-                <div className="flex gap-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => loadExample('binaryIncrement')}
-                  >
-                    Binary +1 (Classic)
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => loadExample('binaryAdd1')}
-                  >
-                    Binary +1 (Structured)
-                  </Button>
-                </div>
-              </CardTitle>
+              <CardTitle>State Table</CardTitle>
             </CardHeader>
             <CardContent>
               <Textarea
                 value={stateTable}
                 onChange={(e) => {
                   setStateTable(e.target.value);
-                  // We could auto-initialize here, but might be annoying if typing
                 }}
                 className="font-mono text-sm h-[400px]"
                 placeholder="Enter state table rules..."
@@ -245,10 +207,7 @@ const Simulator = () => {
                 </Button>
                 
                 <div className="bg-gray-50 p-2 rounded text-sm">
-                  <h3 className="text-sm font-medium mb-1">Supported formats:</h3>
-                  <p className="text-xs text-gray-600 mb-1">
-                    <strong>Classic:</strong> currentState, readSymbol -&gt; nextState, writeSymbol, moveDirection
-                  </p>
+                  <h3 className="text-sm font-medium mb-1">Syntax Format:</h3>
                   <p className="text-xs text-gray-600">
                     <strong>Structured:</strong> Uses states, symbols, and transitions with named sections
                   </p>
