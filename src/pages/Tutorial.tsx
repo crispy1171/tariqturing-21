@@ -66,7 +66,7 @@ const Tutorial = () => {
                 </p>
                 
                 <h3 className="text-lg font-medium mb-2">Format:</h3>
-                <p className="font-mono bg-gray-100 p-2 rounded mb-4">{'{'}{write: symbol, move: state{'}'}</p>
+                <p className="font-mono bg-gray-100 p-2 rounded mb-4">{"{write: symbol, move: state}"}</p>
                 
                 <h3 className="text-lg font-medium mb-2">Example:</h3>
                 <pre className="font-mono bg-gray-100 p-2 rounded">
