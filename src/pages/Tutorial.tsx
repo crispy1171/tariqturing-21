@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const Tutorial = () => {
   return (
@@ -14,7 +14,6 @@ const Tutorial = () => {
         <div className="flex gap-4">
           <Link to="/simulator" className="text-sm text-gray-600 hover:text-primary">Simulator</Link>
           <Link to="/tutorial" className="text-sm font-medium text-primary">Tutorial</Link>
-          <Link to="/examples" className="text-sm text-gray-600 hover:text-primary">Examples</Link>
         </div>
       </nav>
       
@@ -99,12 +98,6 @@ q2, _, _, N        # Halt state`}
                     <Button>
                       Open Simulator
                       <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                  <Link to="/examples">
-                    <Button variant="outline">
-                      Browse Examples
-                      <BookOpen className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                 </div>

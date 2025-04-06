@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,28 +21,6 @@ q1, 0 -> q2, 1, N
 q1, 1 -> q1, 0, L
 q1, _ -> q2, 1, N
 q2, _, _, N # Halt`,
-
-  palindrome: `# Palindrome checker
-# Initial tape: abcba
-q0, a -> q1, X, R
-q0, b -> q2, X, R
-q0, X -> q5, X, R
-q0, _ -> q5, _, R # Accept if empty
-q1, a -> q1, a, R
-q1, b -> q1, b, R
-q1, X -> q1, X, R
-q1, _ -> q3, _, L
-q2, a -> q2, a, R
-q2, b -> q2, b, R
-q2, X -> q2, X, R
-q2, _ -> q4, _, L
-q3, a -> qr, X, L # Reject if not matching 'a'
-q3, X -> q0, X, R # Match found, go back
-q4, b -> qr, X, L # Reject if not matching 'b'
-q4, X -> q0, X, R # Match found, go back
-q5, _ -> qa, _, N # Accept
-qa, _, _, N # Accept state
-qr, _, _, N # Reject state`,
 
   binaryAdd1: `# Adds 1 to a binary number.
 input: '1011'
@@ -199,7 +176,6 @@ const Simulator = () => {
         <div className="flex gap-4">
           <Link to="/simulator" className="text-sm font-medium text-primary">Simulator</Link>
           <Link to="/tutorial" className="text-sm text-gray-600 hover:text-primary">Tutorial</Link>
-          <Link to="/examples" className="text-sm text-gray-600 hover:text-primary">Examples</Link>
         </div>
       </nav>
       
@@ -226,13 +202,6 @@ const Simulator = () => {
                     onClick={() => loadExample('binaryAdd1')}
                   >
                     Binary +1 (Structured)
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => loadExample('palindrome')}
-                  >
-                    Palindrome
                   </Button>
                 </div>
               </CardTitle>

@@ -13,7 +13,6 @@ const Index = () => {
         <div className="flex gap-4">
           <Link to="/simulator" className="text-sm text-gray-600 hover:text-primary">Simulator</Link>
           <Link to="/tutorial" className="text-sm text-gray-600 hover:text-primary">Tutorial</Link>
-          <Link to="/examples" className="text-sm text-gray-600 hover:text-primary">Examples</Link>
         </div>
       </nav>
       
