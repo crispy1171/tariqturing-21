@@ -39,11 +39,11 @@ export const parseStructuredSyntax = (code: string): TuringMachineConfig => {
 
     // Parse options like {write: 0, L: done}
     const writeMatch = options.match(/write:\s*([^,}\s]+)/);
-    const nextStateMatch = options.match(/([LRN]):\s*([^,}\s]+)/);
+    const moveMatch = options.match(/([LRN]):\s*([^,}\s]+)/);
 
-    if (nextStateMatch) {
-      const move = nextStateMatch[1] as 'L' | 'R' | 'N';
-      const nextState = nextStateMatch[2].trim();
+    if (moveMatch) {
+      const move = moveMatch[1] as 'L' | 'R' | 'N';
+      const nextState = moveMatch[2].trim();
       const write = writeMatch ? writeMatch[1].trim() : undefined;
 
       if (!transitions.has(state)) {
@@ -127,11 +127,21 @@ export const parseStateTable = (stateTable: string): {
   config.transitions.forEach((stateTransitions, state) => {
     Object.entries(stateTransitions).forEach(([symbol, rule]) => {
       const readSymbol = symbol === '' ? config.blank : symbol;
+      
+      // Check for cases where write is specified vs not specified
+      let writeSymbol = readSymbol; // Default to read symbol
+      if (rule.write !== undefined) {
+        // Special case: handle 'R' as a move direction, not a write symbol
+        if (rule.write !== 'R' && rule.write !== 'L' && rule.write !== 'N') {
+          writeSymbol = rule.write;
+        }
+      }
+      
       transitions.push({
         currentState: state,
         readSymbol,
         nextState: rule.nextState,
-        writeSymbol: rule.write !== undefined ? rule.write : readSymbol,
+        writeSymbol,
         moveDirection: rule.move
       });
     });
