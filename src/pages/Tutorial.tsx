@@ -66,19 +66,33 @@ const Tutorial = () => {
                 
                 <h3 className="text-lg font-medium mb-2">Format:</h3>
                 <p className="font-mono bg-gray-100 p-2 rounded mb-4">
-                  currentState, readSymbol -&gt; nextState, writeSymbol, moveDirection
+                  Our simulator supports a structured syntax for defining Turing machines.
                 </p>
                 
                 <h3 className="text-lg font-medium mb-2">Example:</h3>
                 <pre className="font-mono bg-gray-100 p-2 rounded">
                   {`# Binary increment example
-right, 0 -> right, 0, R  # Move right past leading zeros
-right, 1 -> right, 1, R  # Move right past ones
-right, _ -> carry, _, L  # Reached end, move left to start incrementing
-carry, 0 -> done, 1, N   # Change 0 to 1 and halt
-carry, 1 -> carry, 0, L  # Change 1 to 0 and move left (carry)
-carry, _ -> done, 1, N   # If we reach the start, add a new 1 and halt
-done, _, _, N            # Halt state`}
+input: "1011"
+blank: "_"
+start state: right
+table:
+  # scan to the rightmost digit
+  right:
+    1: {R: right}
+    0: {R: right}
+    _: {L: carry}
+  
+  # then carry the 1
+  carry:
+    1: {write: 0, L: carry}
+    0: {write: 1, L: done}
+    _: {write: 1, L: done}
+  
+  # Done state (halts)
+  done:
+    1: {N: done}
+    0: {N: done}
+    _: {N: done}`}
                 </pre>
               </CardContent>
             </Card>
