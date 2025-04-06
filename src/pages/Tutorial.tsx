@@ -1,10 +1,13 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
+
 const Tutorial = () => {
-  return <div className="min-h-screen flex flex-col">
+  return (
+    <div className="min-h-screen flex flex-col">
       {/* Navigation */}
       <nav className="w-full py-4 px-6 flex justify-between items-center border-b">
         <Link to="/" className="text-xl font-bold text-primary">Tariq Turing</Link>
@@ -63,11 +66,11 @@ const Tutorial = () => {
                 </p>
                 
                 <h3 className="text-lg font-medium mb-2">Format:</h3>
-                <p className="font-mono bg-gray-100 p-2 rounded mb-4">{write: symbol, move: state}</p>
+                <p className="font-mono bg-gray-100 p-2 rounded mb-4">{'{'}{write: symbol, move: state{'}'}</p>
                 
                 <h3 className="text-lg font-medium mb-2">Example:</h3>
                 <pre className="font-mono bg-gray-100 p-2 rounded">
-                  {`# Binary increment example
+{`# Binary increment example
 input: "1011"
 blank: "_"
 start state: right
@@ -133,6 +136,8 @@ table:
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Tutorial;
