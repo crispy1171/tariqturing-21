@@ -34,7 +34,8 @@ table:
   # then carry the 1
   carry:
     1: {write: 0, L: carry}
-    [0,'_']: {write: 1, L: done}
+    0: {write: 1, L: done}
+    _: {write: 1, L: done}
   done:
 `
 };

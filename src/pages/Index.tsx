@@ -47,36 +47,6 @@ const Index = () => {
         </div>
       </div>
       
-      {/* Features Section */}
-      <div className="bg-gray-50 py-12 px-6 md:px-12">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl font-bold mb-8 text-center">Key Features</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm border">
-              <h3 className="text-lg font-medium mb-2">Interactive Visualization</h3>
-              <p className="text-gray-600">
-                Watch the Turing machine in action with dynamic animations of tape movements and state transitions.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm border">
-              <h3 className="text-lg font-medium mb-2">Step-by-Step Execution</h3>
-              <p className="text-gray-600">
-                Control the execution speed or step through the computation one move at a time to understand each transition.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm border">
-              <h3 className="text-lg font-medium mb-2">Preloaded Examples</h3>
-              <p className="text-gray-600">
-                Learn from ready-to-run examples like binary incrementers, palindrome checkers, and basic arithmetic.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
       {/* Footer */}
       <footer className="py-6 px-6 border-t text-center text-sm text-gray-600">
         <p>© 2025 TuringTales — An Educational Visualization Tool</p>
