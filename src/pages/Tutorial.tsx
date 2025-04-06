@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
+
 const Tutorial = () => {
   return <div className="min-h-screen flex flex-col">
       {/* Navigation */}
@@ -70,13 +72,13 @@ const Tutorial = () => {
                 <h3 className="text-lg font-medium mb-2">Example:</h3>
                 <pre className="font-mono bg-gray-100 p-2 rounded">
                   {`# Binary increment example
-q0, 0 -> q0, 0, R  # Move right past leading zeros
-q0, 1 -> q0, 1, R  # Move right past ones
-q0, _ -> q1, _, L  # Reached end, move left to start incrementing
-q1, 0 -> q2, 1, N  # Change 0 to 1 and halt
-q1, 1 -> q1, 0, L  # Change 1 to 0 and move left (carry)
-q1, _ -> q2, 1, N  # If we reach the start, add a new 1 and halt
-q2, _, _, N        # Halt state`}
+right, 0 -> right, 0, R  # Move right past leading zeros
+right, 1 -> right, 1, R  # Move right past ones
+right, _ -> carry, _, L  # Reached end, move left to start incrementing
+carry, 0 -> done, 1, N   # Change 0 to 1 and halt
+carry, 1 -> carry, 0, L  # Change 1 to 0 and move left (carry)
+carry, _ -> done, 1, N   # If we reach the start, add a new 1 and halt
+done, _, _, N            # Halt state`}
                 </pre>
               </CardContent>
             </Card>
@@ -105,4 +107,5 @@ q2, _, _, N        # Halt state`}
       </div>
     </div>;
 };
+
 export default Tutorial;
