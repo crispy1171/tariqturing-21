@@ -37,7 +37,7 @@ export const parseStructuredSyntax = (code: string): TuringMachineConfig => {
     const symbols = match[1] ? match[1].split(',').map(s => s.trim()) : [match[2].trim()];
     const options = match[3].trim();
 
-    // Parse options like {write: 0, L: done}
+    // Parse options like {write: 0, L: done} or {R: right}
     const writeMatch = options.match(/write:\s*([^,}\s]+)/);
     const moveMatch = options.match(/([LRN]):\s*([^,}\s]+)/);
 
@@ -137,23 +137,28 @@ export const parseStateTable = (stateTable: string): {
   config.transitions.forEach((stateTransitions, state) => {
     console.log(`Processing transitions for state '${state}'`, stateTransitions);
     Object.entries(stateTransitions).forEach(([symbol, rule]) => {
-      const readSymbol = symbol === '' ? config.blank : symbol;
+      // Handle both single symbols and arrays of symbols
+      const symbols = symbol.includes(',') ? symbol.split(',').map(s => s.trim()) : [symbol];
       
-      // Check for cases where write is specified vs not specified
-      let writeSymbol = readSymbol; // Default to read symbol
-      if (rule.write !== undefined) {
-        writeSymbol = rule.write;
+      for (const readSymbol of symbols) {
+        const actualReadSymbol = readSymbol === '' ? config.blank : readSymbol;
+        
+        // Check for cases where write is specified vs not specified
+        let writeSymbol = actualReadSymbol; // Default to read symbol
+        if (rule.write !== undefined) {
+          writeSymbol = rule.write;
+        }
+        
+        transitions.push({
+          currentState: state,
+          readSymbol: actualReadSymbol,
+          nextState: rule.nextState,
+          writeSymbol,
+          moveDirection: rule.move
+        });
+        
+        console.log(`Added transition: ${state} + ${actualReadSymbol} -> ${rule.nextState}, write ${writeSymbol}, move ${rule.move}`);
       }
-      
-      transitions.push({
-        currentState: state,
-        readSymbol,
-        nextState: rule.nextState,
-        writeSymbol,
-        moveDirection: rule.move
-      });
-      
-      console.log(`Added transition: ${state} + ${readSymbol} -> ${rule.nextState}, write ${writeSymbol}, move ${rule.move}`);
     });
   });
   

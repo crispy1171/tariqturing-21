@@ -18,7 +18,8 @@ start state: right
 table:
   # scan to the rightmost digit
   right:
-    [1,0]: {R: right}
+    1: {R: right}
+    0: {R: right}
     _: {L: carry}
   
   # then carry the 1
@@ -29,7 +30,9 @@ table:
   
   # Done state (halts)
   done:
-    [1,0,_]: {N: done}
+    1: {N: done}
+    0: {N: done}
+    _: {N: done}
 `;
 
 const Simulator = () => {
