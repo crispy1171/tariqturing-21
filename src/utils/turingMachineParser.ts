@@ -119,22 +119,30 @@ export const parseStateTable = (stateTable: string): {
   initialTape: string[], 
   initialState: string 
 } => {
+  // Log the input for debugging
+  console.log('Parsing state table:', stateTable);
+  
   // We're focusing only on structured syntax now
   const config = parseStructuredSyntax(stateTable);
+  
+  console.log('Parsed config:', JSON.stringify({
+    initialState: config.initialState,
+    blank: config.blank,
+    input: config.input,
+    transitions: Object.fromEntries([...config.transitions].map(([k, v]) => [k, v]))
+  }, null, 2));
   
   // Convert the structured format transitions to the format expected by the simulator
   const transitions: any[] = [];
   config.transitions.forEach((stateTransitions, state) => {
+    console.log(`Processing transitions for state '${state}'`, stateTransitions);
     Object.entries(stateTransitions).forEach(([symbol, rule]) => {
       const readSymbol = symbol === '' ? config.blank : symbol;
       
       // Check for cases where write is specified vs not specified
       let writeSymbol = readSymbol; // Default to read symbol
       if (rule.write !== undefined) {
-        // Special case: handle 'R' as a move direction, not a write symbol
-        if (rule.write !== 'R' && rule.write !== 'L' && rule.write !== 'N') {
-          writeSymbol = rule.write;
-        }
+        writeSymbol = rule.write;
       }
       
       transitions.push({
@@ -144,12 +152,16 @@ export const parseStateTable = (stateTable: string): {
         writeSymbol,
         moveDirection: rule.move
       });
+      
+      console.log(`Added transition: ${state} + ${readSymbol} -> ${rule.nextState}, write ${writeSymbol}, move ${rule.move}`);
     });
   });
   
   // Convert the input string to an array
   let initialTape = config.input ? Array.from(config.input) : [];
   if (initialTape.length === 0) initialTape = ['1', '0', '1', '1']; // Default to "1011" if no input
+  
+  console.log('Final transitions:', transitions);
   
   return {
     transitions,

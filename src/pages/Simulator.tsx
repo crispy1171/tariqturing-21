@@ -12,13 +12,13 @@ import { parseStateTable } from '@/utils/turingMachineParser';
 
 // Default binary increment example
 const DEFAULT_EXAMPLE = `# Adds 1 to a binary number
-input: '1011'
-blank: '_'
+input: "1011"
+blank: "_"
 start state: right
 table:
   # scan to the rightmost digit
   right:
-    [1,0]: {write: R}
+    [1,0]: {R: right}
     _: {L: carry}
   
   # then carry the 1
@@ -29,6 +29,7 @@ table:
   
   # Done state (halts)
   done:
+    [1,0,_]: {N: done}
 `;
 
 const Simulator = () => {
