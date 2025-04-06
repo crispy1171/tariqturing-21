@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -58,9 +59,9 @@ const Index = () => {
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-medium mb-2">Custom Machine Templates</h3>
+              <h3 className="text-lg font-medium mb-2">Guided Learning Path</h3>
               <p className="text-gray-600">
-                Choose from pre-built example machines or create your own from scratch with our library of common computational patterns and algorithms.
+                Follow our comprehensive tutorial that breaks down complex computational theory concepts into digestible lessons with practical examples you can run in the simulator.
               </p>
             </div>
             
