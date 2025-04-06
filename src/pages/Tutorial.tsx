@@ -1,10 +1,13 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
+
 const Tutorial = () => {
-  return <div className="min-h-screen flex flex-col">
+  return (
+    <div className="min-h-screen flex flex-col">
       {/* Navigation */}
       <nav className="w-full py-4 px-6 flex justify-between items-center border-b">
         <Link to="/" className="text-xl font-bold text-primary">Tariq Turing</Link>
@@ -62,7 +65,7 @@ const Tutorial = () => {
                   The state table defines the behavior of a Turing machine. Each row specifies what happens when the machine is in a particular state and reads a particular symbol.
                 </p>
                 
-                <h3 className="text-lg font-medium mb-2">{write: symbol, move: state}</h3>
+                <h3 className="text-lg font-medium mb-2">{"{"} write: symbol, move: state {"}"}</h3>
                 <p className="font-mono bg-gray-100 p-2 rounded mb-4">
                   currentState, readSymbol -&gt; nextState, writeSymbol, moveDirection
                 </p>
@@ -103,6 +106,8 @@ q2, _, _, N        # Halt state`}
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Tutorial;
