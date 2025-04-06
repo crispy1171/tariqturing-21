@@ -54,23 +54,23 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-medium mb-2">Visual State Transitions</h3>
+              <h3 className="text-lg font-medium mb-2">Interactive State Diagram</h3>
               <p className="text-gray-600">
-                See your Turing machine's states and transitions visualized as an interactive graph that updates in real-time.
+                Watch your machine's logic come to life with a dynamic graph showing active states and transitions during execution.
               </p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-medium mb-2">Flexible Syntax Options</h3>
+              <h3 className="text-lg font-medium mb-2">Dual Notation Support</h3>
               <p className="text-gray-600">
-                Define your machines using either classic notation or structured syntax with full support for complex operations.
+                Write machines using traditional academic notation or our structured YAML-like format — both fully supported and interchangeable.
               </p>
             </div>
             
             <div className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-              <h3 className="text-lg font-medium mb-2">Dynamic Tape Visualization</h3>
+              <h3 className="text-lg font-medium mb-2">Step-by-Step Execution</h3>
               <p className="text-gray-600">
-                Watch as the read/write head moves along the tape, updating symbols based on your transition rules.
+                Follow the computation process from input to output, with controls to run, pause, or step through your algorithm at your own pace.
               </p>
             </div>
           </div>

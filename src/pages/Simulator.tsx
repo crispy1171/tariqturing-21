@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Play, Pause, StepForward, RotateCcw } from "lucide-react";
+import { Play, Pause, StepForward, RotateCcw, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import TuringMachine from '@/components/simulator/TuringMachine';
 import StateGraph from '@/components/simulator/StateGraph';
@@ -29,8 +30,8 @@ start state: right
 table:
   # scan to the rightmost digit
   right:
-    [1,0]: R
-    [_]: {L: carry}
+    [1,0]: {write: R}
+    _: {L: carry}
   # then carry the 1
   carry:
     1: {write: 0, L: carry}
@@ -51,12 +52,14 @@ const Simulator = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [debugLog, setDebugLog] = useState<string[]>(['# Machine initialized']);
+  const [isDone, setIsDone] = useState(false);
   
   // Initialize the machine
   const initialize = () => {
     setErrorMessage(null);
     setDebugLog(['# Machine initialized']);
     setCurrentStep(0);
+    setIsDone(false);
     
     try {
       // Use the new parser utility
@@ -88,6 +91,11 @@ const Simulator = () => {
   const step = () => {
     if (!transitions.length) {
       initialize();
+      return;
+    }
+    
+    if (isDone) {
+      addToDebugLog("Machine already halted. Reset to run again.");
       return;
     }
     
@@ -135,33 +143,36 @@ const Simulator = () => {
       }
     } else {
       addToDebugLog(`  Move: None (halt)`);
+      setIsDone(true);
     }
     
     setCurrentStep(prev => prev + 1);
     
     // Check for halting
-    if (transition.moveDirection === 'N') {
+    if (transition.moveDirection === 'N' || transition.nextState === 'done') {
       addToDebugLog(`Machine halted at state ${transition.nextState}`);
+      setIsDone(true);
       setIsRunning(false);
     }
   };
   
   // Run continuously
   React.useEffect(() => {
-    if (!isRunning) return;
+    if (!isRunning || isDone) return;
     
     const interval = setInterval(() => {
       step();
     }, 1000 - (speed[0] * 9)); // Map 1-100 to 1000-100ms
     
     return () => clearInterval(interval);
-  }, [isRunning, headPosition, currentState, tape, transitions, speed]);
+  }, [isRunning, headPosition, currentState, tape, transitions, speed, isDone]);
   
   // Load an example
   const loadExample = (example: keyof typeof EXAMPLES) => {
     setStateTable(EXAMPLES[example]);
     setIsRunning(false);
-    initialize();
+    setIsDone(false);
+    setTimeout(initialize, 0); // Initialize after state update
   };
   
   // Initialize on first load and when state table changes
@@ -292,6 +303,7 @@ const Simulator = () => {
                         size="icon"
                         variant={isRunning ? "destructive" : "default"}
                         onClick={() => setIsRunning(!isRunning)}
+                        disabled={isDone}
                       >
                         {isRunning ? (
                           <Pause className="h-4 w-4" />
@@ -303,7 +315,7 @@ const Simulator = () => {
                         size="icon"
                         variant="outline"
                         onClick={step}
-                        disabled={isRunning}
+                        disabled={isRunning || isDone}
                       >
                         <StepForward className="h-4 w-4" />
                       </Button>
@@ -318,9 +330,17 @@ const Simulator = () => {
                   currentState={currentState}
                 />
                 
-                <div className="mt-4 text-sm">
-                  <p><strong>Current State:</strong> {currentState}</p>
-                  <p><strong>Steps:</strong> {currentStep}</p>
+                <div className="mt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                  <div className="text-sm">
+                    <p><strong>Current State:</strong> {currentState}</p>
+                    <p><strong>Steps:</strong> {currentStep}</p>
+                  </div>
+                  {isDone && (
+                    <div className="flex items-center gap-2 text-green-600 bg-green-50 px-3 py-1.5 rounded-md">
+                      <CheckCircle2 className="h-4 w-4" />
+                      <span className="font-medium">Computation Complete</span>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
