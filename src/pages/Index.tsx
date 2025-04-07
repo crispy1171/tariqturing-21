@@ -1,11 +1,20 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import TuringAnimation from "@/components/landing/TuringAnimation";
-
 const Index = () => {
   return <div className="min-h-screen flex flex-col">
-      {/* Hero Section - Navigation bar is now global */}
+      {/* Navigation */}
+      <nav className="w-full py-4 px-6 flex justify-between items-center border-b">
+        <h1 className="text-xl font-bold text-primary">Tariq Turing</h1>
+        <div className="flex gap-4">
+          <Link to="/simulator" className="text-sm text-gray-600 hover:text-primary">Simulator</Link>
+          <Link to="/tutorial" className="text-sm text-gray-600 hover:text-primary">Tutorial</Link>
+        </div>
+      </nav>
+      
+      {/* Hero Section */}
       <div className="flex-1 flex flex-col md:flex-row">
         <div className="flex-1 flex flex-col justify-center px-6 md:px-12 py-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Learn Turing Machines Visually</h1>
@@ -72,5 +81,4 @@ const Index = () => {
       </footer>
     </div>;
 };
-
 export default Index;
