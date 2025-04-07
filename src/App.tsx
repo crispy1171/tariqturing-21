@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Simulator from "./pages/Simulator";
 import Tutorial from "./pages/Tutorial";
 import Chatbot from "./components/chatbot/Chatbot";
+import Navbar from "./components/layout/Navbar";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/simulator" element={<Simulator />} />
