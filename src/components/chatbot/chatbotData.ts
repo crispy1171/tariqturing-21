@@ -72,7 +72,7 @@ export const chatbotData = {
         {
           id: "contact-info",
           text: "How can I contact the creators?",
-          answer: "This project is maintained by enthusiasts of theoretical computer science. While we don't have a direct contact method implemented yet, we appreciate your interest and feedback!"
+          answer: "This project was made by Tariq AYYAD, CSAI Student at Sussex university, you can contact me at call.ayyad@gmail.com!"
         }
       ]
     }
