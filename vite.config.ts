@@ -5,7 +5,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "./", // Correct relative path for GitHub Pages
+  // Use '/' for Vercel deployment, which expects root-relative paths
+  base: "/",
   server: {
     host: "::",
     port: 8080,
